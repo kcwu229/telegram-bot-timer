@@ -2,10 +2,10 @@ from telegram import Update
 from datetime import datetime
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, ConversationHandler, CallbackContext
 
-updater = Updater('Fill in your telegram token', use_context=True)
+updater = Updater('ENTER YOUR TG TOKEN', use_context=True)
 
 TYPE = range(1)
-def start(update):
+def start(update,context):
     update.message.reply_text("Welcome to use this timer, in here 😜, "
                               "\nyou can tell the bot your day planning and it would set reminder to you!"
                               "\n For more help, read in /help ☺️")
@@ -14,8 +14,8 @@ def help (update, context):
     update.message.reply_text("For first time to use, "
                               "\ntype the command /today_plan to set your plan 👆"
                               "\n\nFollow the rule:"
-                              "\nFill-in time first, followed by ; then fill the event"
-                              "\n e.g. 21:00;Sleep"
+                              "\nFill-in time first, followed by  ';'   then fill the event"
+                              "\n e.g.    21:00;Sleep"
                               "\n\n Wrong typing pattern would result in nothing"
                               "\nAfter finishing, type f ,"
                               "\n and you will receive a message 'Finish'"
@@ -116,6 +116,8 @@ conv_td = ConversationHandler(entry_points=[CommandHandler("today_plan", today_p
                               fallbacks=[CommandHandler("end", end)],
                               )
 
+updater.dispatcher.add_handler(CommandHandler("start", start))
+updater.dispatcher.add_handler(CommandHandler("help", help))
 updater.dispatcher.add_handler(conv_td)
 
 updater.start_polling()
